@@ -1,0 +1,16 @@
+class Solution {
+    public int findDuplicate(int[] nums) {
+        
+        while(nums[0] != nums[nums[0]]){
+            
+            int swap = nums[nums[0]];
+            nums[nums[0]] = nums[0];
+            nums[0] = swap;
+        }
+        return nums[0];
+        
+        //OR 
+        //sort array first then compare current element with 
+        //next element. If they match return current element.
+    }
+}
