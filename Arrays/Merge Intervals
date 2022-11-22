@@ -1,0 +1,42 @@
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        
+        List<int[]> res = new ArrayList<>();
+        
+        if(intervals.length <= 1){
+            return intervals;
+        }
+        
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0])); 
+        //this line will compare first elements of the subarray
+        //to sort it in ascending sort of first elements.
+        
+        
+        //take elements of first subarray as start & end.
+        int start = intervals[0][0];
+        int end = intervals[0][1];
+        
+        
+        for(int[] index : intervals){
+            
+            //i = index of intervals.
+            //index[0] points to first element of subarray.
+            
+            if(index[0] <= end){
+                end = Math.max(end, index[1]);
+            }
+            else{
+                res.add(new int[] {start, end});
+                start = index[0];
+                end = index[1];
+            }
+        }
+        
+        //add remaining elements as a new array in list of array.
+        
+        res.add(new int[] {start, end});
+        
+        //give any dimension to new array.
+        return res.toArray(new int[0][]);
+    }
+}
