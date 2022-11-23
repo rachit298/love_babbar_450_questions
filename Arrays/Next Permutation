@@ -1,0 +1,56 @@
+class Solution {
+    public void nextPermutation(int[] nums) {
+        
+        if(nums.length == 0 | nums == null){
+            return;    
+        }
+        
+        int k = nums.length - 2;
+        int n = nums.length - 1;
+        
+        //loop to check value of k
+        
+        for(int index = n; index > 0; index--){
+            
+            if(nums[index] <= nums[index-1]) k--;
+            else break;
+        }
+        
+        //if k = -1 it means array is in descending order like 3,2,1
+        //to get next permutation just swap all elements.
+        
+        if(k == -1){
+            reverse(nums, 0, n);
+            return;
+        }
+        
+        //find the first element that is next greater element and swap both elements.
+        
+        for(int index = n; index > 0; index--){
+            
+            if(nums[index] > nums[k]){
+                
+                int swap = nums[index];
+                nums[index] = nums[k];
+                nums[k] = swap;
+                break;
+            }
+        }
+        
+        //swap the array from k+1 position till the end.
+        
+        reverse(nums, k+1, n);
+    }
+    
+    public void reverse(int[] nums, int start, int end){
+        
+        while(start < end){
+            
+            int swap = nums[start];
+            nums[start] = nums[end];
+            nums[end] = swap;
+            start++;
+            end--;
+        }
+    }
+}
