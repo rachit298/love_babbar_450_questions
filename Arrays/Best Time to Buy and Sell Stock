@@ -1,0 +1,20 @@
+class Solution {
+    public int maxProfit(int[] prices) {
+        
+        int maxProfit = 0, minSoFar = prices[0];
+        
+        for(int pos = 0; pos < prices.length; pos++){
+            
+            if(minSoFar > prices[pos]){
+                
+                minSoFar = prices[pos];
+            }
+            
+            if(maxProfit < prices[pos] - minSoFar){
+                
+                maxProfit = prices[pos] - minSoFar;
+            }
+        }
+        return maxProfit;
+    }
+}
