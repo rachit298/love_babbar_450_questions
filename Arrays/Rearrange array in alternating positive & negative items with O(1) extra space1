@@ -1,0 +1,45 @@
+/*package whatever //do not write package name here */
+
+import java.io.*;
+
+class GFG {
+	public static void main (String[] args) {
+		
+		//Rearranging while not maintaining order.
+		//1st approach
+		
+		int arr[] = { -5, -2, 5,-8, 2, 4, 7, 1, 8, 0 };
+		int n = arr.length;
+		
+		int start = 0, end = n-1;
+		
+		while(start <= end){
+		    
+		    if(arr[start] >= 0){
+		        start++;
+		    }
+		    else if(arr[end] < 0){
+		        end--;
+		    }
+		    else if(arr[start] < 0 && arr[end] >= 0){
+		        
+		        arr[start] += arr[end] - (arr[end] = arr[start]);
+		        start++;
+		        end--;
+		    }
+		}
+		
+		int k = 0;
+		
+		while(start <= n-1){
+		    
+		    arr[start] += arr[k] - (arr[k] = arr[start]);
+		    start++;
+		    k += 2;
+		}
+		
+		for(int i : arr){
+		    System.out.print(i + " ");
+		}
+	}
+}
