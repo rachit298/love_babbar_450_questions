@@ -1,0 +1,108 @@
+//{ Driver Code Starts
+//Initial Template for Java
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+{
+    public static void main(String[] args) throws IOException
+    {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int T = Integer.parseInt(br.readLine().trim());
+        while(T-->0)
+        {
+            int n = Integer.parseInt(br.readLine().trim());
+            String s = br.readLine();
+            String[] S = s.split(" ");
+            int[] v  = new int[n];
+            for(int  i = 0; i < n; i++)
+                v[i] = Integer.parseInt(S[i]);
+            Solution ob = new Solution();
+            int ans = ob.find_median(v);
+            System.out.println(ans);
+        }
+    }
+}
+
+// } Driver Code Ends
+
+
+//User function Template for Java
+
+class Solution
+{
+    public int find_median(int[] v)
+    {
+        
+        //using Merge sort here because it has n*logn TC.
+        
+        mergeSort(v, 0, v.length-1);
+        
+        int x = v.length/2;
+        
+        if(v.length%2 == 0){
+            
+            return (v[x] + v[x - 1])/2;
+        }
+        else{
+            
+            return v[x];
+        }
+    }
+    
+    public void mergeSort(int[] arr, int left, int right){
+        
+        if(left < right){
+        
+            int mid = (left + right)/2;
+        
+            mergeSort(arr, left, mid);
+        
+            mergeSort(arr, mid+1, right);
+        
+            mergeSortBothSides(arr, left, mid, right);
+        }
+    }
+    
+    public void mergeSortBothSides(int[] arr, int left, int mid, int right){
+        
+        int i = left, k = 0, j = mid+1;
+        
+        int[] sorted = new int[right-left+1];
+        
+        while(i <= mid && j <= right){
+            
+            if(arr[i] < arr[j]){
+                
+                sorted[k] = arr[i];
+                i++;
+            }
+            else{
+                
+                sorted[k] = arr[j];
+                j++;
+            }
+            k++;
+        }
+        
+        while(i <= mid){
+            
+            sorted[k] = arr[i];
+            i++;
+            k++;
+        }
+        
+        while(j <= right){
+            
+            sorted[k] = arr[j];
+            j++;
+            k++;
+        }
+        
+        for(int index = 0, index1 = left; index < k && index1 <= right; index++, index1++){
+            
+            arr[index1] = sorted[index];
+        }
+    }
+}
