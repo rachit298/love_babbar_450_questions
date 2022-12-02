@@ -1,0 +1,110 @@
+//{ Driver Code Starts
+import java.util.*;
+class PalindromicArray{
+	public static void main(String[] args){
+		Scanner sc = new Scanner(System.in);
+		int t = sc.nextInt();
+		while(t-->0)
+		{
+			int n = sc.nextInt();
+			int[] a = new int[n];
+			for(int i = 0 ;i < n; i++)
+				a[i]=sc.nextInt();
+			GfG g = new GfG();
+			System.out.println(g.palinArray(a , n));
+		}
+	}
+}
+// } Driver Code Ends
+
+
+/*Complete the Function below*/
+class GfG
+{
+	public static int palinArray(int[] a, int n)
+   {
+                   //1st method 
+      
+        for(int index = 0; index < n; index++){
+            
+            //suppose number is 1112
+            
+            int ans = 0;
+            
+            int temp = a[index];
+            
+            //1112 will be converted to 2111 and stored in ans 
+            
+            while(temp > 0){
+                
+                int rem = temp % 10;
+                temp /= 10;
+                ans = ans*10 + rem;
+            }
+            
+            //compare both ans and a[index] 
+            
+            if(ans != a[index]){
+                
+                return 0;
+            }
+        }
+        
+        return 1;
+   }
+}
+        
+        /*
+                        //2nd method
+                        
+        //for example array is [1112, 222, 333, 444, 555]
+        
+        //this loop will iterate over above array
+        
+        for(int index = 0; index < n; index++){
+            
+            int temp = a[index], count = 0;
+            
+            //let's take one value that is '1112' to evaluate this algo 
+            
+            //calculate the size of number
+            
+            while(temp > 0){
+                
+                temp /= 10;
+                count++;
+            }
+            
+            //according to 1112 count is 4
+            
+            temp = a[index];
+            
+            int firstValueDiv = (int)Math.pow(10, count-1), lastValueDiv = 10;
+            
+            //firstValueDiv = 10^2, lastValueDiv = 10
+            
+            //now below loop takes 1112 and take out its first digit(1) and last digit(2) then compare them.
+            //for updating temp, for example 1 is taken from 1112 then multiply this 1 by 1000 and subtract
+            //both numbers 1112-1000=112 then to remove rightmost digit divide temp by 10.
+            
+            while(count > 1){
+                
+                int firstValue = temp / firstValueDiv;
+                int lastValue = temp % lastValueDiv;
+                
+                temp -= firstValue * firstValueDiv;
+                temp /= 10;
+                
+                if(firstValue != lastValue){
+                    
+                    return 0;
+                }
+                else{
+                    
+                    firstValueDiv /= 100;
+                    count -= 2;
+                }
+            }
+        }
+        
+        */
