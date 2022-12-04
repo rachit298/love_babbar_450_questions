@@ -1,0 +1,86 @@
+//{ Driver Code Starts
+import java.io.*;
+import java.util.*;
+class GFG
+{
+    public static void main(String args[])throws IOException
+    {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        
+        while(t-- > 0)
+        {
+            int r = sc.nextInt();
+            int c = sc.nextInt();
+            
+            int matrix[][] = new int[r][c];
+            
+            for(int i = 0; i < r; i++)
+            {
+                for(int j = 0; j < c; j++)
+                 matrix[i][j] = sc.nextInt();
+            }
+            Solution ob = new Solution();
+            ArrayList<Integer> ans = ob.spirallyTraverse(matrix, r, c);
+            for (Integer val: ans) 
+                System.out.print(val+" "); 
+            System.out.println();
+        }
+    }
+}
+// } Driver Code Ends
+
+
+class Solution
+{
+    //Function to return a list of integers denoting spiral traversal of matrix.
+    static ArrayList<Integer> spirallyTraverse(int matrix[][], int r, int c)
+    {
+        
+        //pointers to iterate through elements as required in question
+        
+        int rowStart = 0, colStart = 0, rowEnd = r-1, colEnd = c-1;
+        
+        int totalNumbers = r*c;
+        int count = 0;
+        
+        ArrayList<Integer> spiralValues = new ArrayList<>();
+        
+        while(count < totalNumbers){
+            
+            for(int col = colStart, row = rowStart; col <= colEnd && count < totalNumbers; col++){
+                
+                spiralValues.add(matrix[row][col]);
+                count++;
+            }
+            
+            rowStart++;
+            
+            for(int row = rowStart, col = colEnd; row <= rowEnd && count < totalNumbers; row++){
+                
+                spiralValues.add(matrix[row][col]);
+                count++;
+            }
+            
+            colEnd--;
+            
+            for(int col = colEnd, row = rowEnd; col >= colStart && count < totalNumbers; col--){
+                
+                spiralValues.add(matrix[row][col]);
+                count++;
+            }
+            
+            rowEnd--;
+            
+            for(int row = rowEnd, col = colStart; row >= rowStart && count < totalNumbers; row--){
+                
+                spiralValues.add(matrix[row][col]);
+                count++;
+            }
+            
+            colStart++;
+        }
+        
+        return spiralValues;
+    }
+}
