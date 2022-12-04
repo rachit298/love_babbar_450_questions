@@ -1,0 +1,63 @@
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        
+        //BINARY SEARCH
+        //1st and best approach
+        
+        if(matrix.length == 0) return false;
+        
+        int n = matrix.length;
+        int m = matrix[0].length;
+        
+        int low = 0, high = n*m - 1;
+        
+        while(low <= high){
+            
+            int mid = (high+low)/2;
+            
+            int rowIndex = mid/m;
+            int colIndex = mid%m;
+            
+            if(matrix[rowIndex][colIndex] == target){
+                
+                return true;
+            }
+            else if(matrix[rowIndex][colIndex] < target){
+                
+                low = mid+1;
+            }
+            else if(matrix[rowIndex][colIndex] > target){
+                
+                high = mid-1;
+            }
+        }
+        
+        return false;
+    }
+}
+
+/*
+
+//2nd approach
+        
+        int i = 0, j = matrix[0].length-1;
+	    
+	    while(i < n && j >= 0){
+	        
+	        if(matrix[i][j] == target){
+	            
+	            return true;
+	        }
+	        else if(matrix[i][j] < target){
+	            
+	            i++;
+	        }
+	        else{
+	            
+	            j--;
+	        }
+	    }
+	    
+	    return false;
+        
+        */
