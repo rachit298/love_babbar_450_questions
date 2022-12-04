@@ -79,7 +79,11 @@ class Solution {
         int max1sRow = -1;
         int count = Integer.MIN_VALUE;
         
+        //Iterating through each row and checking max possible 1's
+        
         for(int row = 0; row < n; row++){
+            
+            //Binary search starts for current row
             
             int low = 0, high = m-1;
             
@@ -87,9 +91,16 @@ class Solution {
                 
                 int mid = low + (high-low)/2;
                 
+                //check if the element is "1" at present indices
+                
                 if(arr[row][mid] == 1){
                     
+                    //check if the count is smaller than current number of 1's
+                    //m-mid is total no. of 1's from current index to end of column
+                    
                     if(m-mid > count){
+                        
+                        //update count and row that has max no. of 1's
                         
                         count = Math.max(count, (m-mid));
                         max1sRow = row;
@@ -103,10 +114,15 @@ class Solution {
                 }
             }
             
+            //if count is already equal to column length then no need to check 
+            //further rows and break from loop.
+            
             if(count == m){
                 break;
             }
         }
+        
+        //return row that has max no. of 1's in it
         
         return max1sRow;
 */
