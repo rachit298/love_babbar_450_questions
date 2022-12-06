@@ -1,0 +1,48 @@
+/*package whatever //do not write package name here */
+
+import java.io.*;
+import java.util.*;
+
+class GFG {
+	public static void main (String[] args) {
+		
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();
+		int[][] arr = new int[n][n];
+		
+		for(int row = 0; row < n; row++){
+		    for(int col = 0; col < n; col++){
+		        
+		        arr[row][col] = sc.nextInt();
+		    }
+		}
+		
+		//transpose of matrix
+		for(int row = 0; row < n; row++){
+		    
+		    for(int col = 0; col <= row; col++){
+		        
+		      arr[row][col] += arr[col][row] - (arr[col][row] = arr[row][col]);
+		    }
+		}
+		
+		//reverse matrix
+		for(int row = 0; row < n; row++){
+		    
+		    int endColInd = n-1;
+		    
+		    for(int col = 0; col <= n/2; col++){
+		        
+		        arr[row][col] += arr[row][endColInd] - (arr[row][endColInd] = arr[row][col]);
+		        endColInd--;
+		    }
+		}
+		
+		for(int[] i : arr){
+		    for(int ele : i){
+		        System.out.print(ele + " ");
+		    }
+		    System.out.println();
+		}
+	}
+}
