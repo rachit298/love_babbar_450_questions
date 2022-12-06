@@ -1,0 +1,89 @@
+//{ Driver Code Starts
+import java.util.*;
+
+class FindMinCost
+{
+	public static void main(String args[])
+	{
+		Scanner sc = new Scanner(System.in);
+		int t = sc.nextInt();
+		while(t > 0)
+		{
+			int n = sc.nextInt();
+			int m = sc.nextInt();
+			int arr[][] = new int[n][m];
+			for(int i=0; i<n; i++)
+			{
+				for(int j=0; j<m; j++ )
+				{
+					arr[i][j] = sc.nextInt();
+				}
+			}
+			System.out.println(new Solution().maxArea(arr, n, m));
+		t--;
+		}
+	}
+}
+// } Driver Code Ends
+
+
+/*Complete the function given below*/
+class Solution {
+    public int maxArea(int M[][], int n, int m) {
+        
+        // TC - O(n * (m+n))
+        // SC - O(m)
+        
+        int maxArea = 0;
+        
+        //use this array and visualize it as a histogram 
+        int[] arr = new int[m];
+        
+        for(int row = 0; row < n; row++){
+            for(int col = 0; col < m; col++){
+                
+                if(M[row][col] == 1){
+                    
+                    arr[col] += 1;
+                }
+                else{
+                    
+                    arr[col] = 0;
+                }
+            }
+            
+            //add values in histogram and compare its area till now
+            //O(n)
+            int area = largestRectangleArea(arr);
+            maxArea = Math.max(maxArea, area);
+        }
+        return maxArea;
+    }
+    
+    //concept of question largest rectangle in histogram
+    public int largestRectangleArea(int[] heights){
+        
+        Stack<Integer> s = new Stack<>();
+        
+        int n = heights.length;
+        int maxArea = 0;
+        
+        for(int index = 0; index <= n; index++){
+            
+            while(!s.isEmpty() && (index == n || heights[s.peek()] >= heights[index])){
+                
+                int height = heights[s.peek()];
+                s.pop();
+                int width;
+                
+                if(s.isEmpty()) width = index;
+                else width = index - s.peek() - 1;
+                
+                maxArea = Math.max(maxArea, width*height);
+            }
+            
+            s.push(index);
+        }
+        return maxArea;
+    }
+}
