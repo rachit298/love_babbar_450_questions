@@ -1,0 +1,51 @@
+/*package whatever //do not write package name here */
+
+import java.io.*;
+import java.util.*;
+
+class GFG {
+	public static void main (String[] args) {
+	    
+	    Scanner sc = new Scanner(System.in);
+	    int m = sc.nextInt();
+	    int n = sc.nextInt();
+	    
+	    int[][] arr = new int[m][n];
+	    
+	    for(int[] row : arr){
+	        for(int col = 0; col < n; col++){
+	            
+	            row[col] = sc.nextInt();
+	        }
+	    }
+	    
+	    HashMap<Integer, Integer> map = new HashMap<>();
+	    
+	    //store values of 0th row in map and then check with 
+	    //other rows if it has same values.
+	    
+	    for(int col = 0; col < n; col++){
+	       
+            map.put(arr[0][col], 1);
+	    }
+	    
+	    //check in remaining rows if it has same values as 0th row
+	    for(int row = 1; row < m; row++){
+	        
+	        for(int col = 0; col < n; col++){
+	            
+	            //if such values exist, then increment their values
+	            if(map.containsKey(arr[row][col]) && map.get(arr[row][col]) == row){
+	                
+	                map.put(arr[row][col], map.get(arr[row][col]) + 1);
+	            }
+	            
+	            //at the end row check if values that has same values as no. of rows 'm'
+	            //print those values
+	            if(row == m-1 && map.containsKey(arr[row][col]) && map.get(arr[row][col]) == m){
+	                System.out.print(arr[row][col] + " ");
+	            }
+	        }
+	    }
+	}
+}
