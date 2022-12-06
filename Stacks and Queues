@@ -1,0 +1,81 @@
+class Solution {
+    public int largestRectangleArea(int[] heights) {
+        
+        // TC - O(N) + O(N) + O(N) + O(N) + O(N) = O(N)
+        // SC - O(3N)
+        
+        int [] leftSmall = new int[heights.length];
+        int[] rightSmall = new int[heights.length];
+        
+        int n = heights.length;
+        
+        //using stack to keep track of values that are smaller than current or 
+        //greater than current.
+        
+        Stack<Integer> s = new Stack<>();
+        
+        for(int index = 0; index < n; index++){
+            
+            while(!s.isEmpty() && heights[s.peek()] >= heights[index]){
+                
+                s.pop();
+            }
+            
+            if(s.isEmpty()) leftSmall[index] = 0;
+            else leftSmall[index] = s.peek()+1;   
+            
+            s.push(index);
+        }
+        
+        while(!s.isEmpty()) s.pop();
+        
+        for(int index = n-1; index >= 0; index--){
+            
+            while(!s.isEmpty() && heights[s.peek()] >= heights[index]){
+                
+                s.pop();
+            }
+            
+            if(s.isEmpty()) rightSmall[index] = n-1;
+            else rightSmall[index] = s.peek()-1;
+            
+            s.push(index);
+        }
+        
+        int maxArea = 0;
+        
+        for(int index = 0; index < n; index++){
+            maxArea = Math.max(maxArea, heights[index] * (rightSmall[index]-leftSmall[index]+1));
+        }
+        return maxArea;
+        
+
+    }
+}
+
+
+//         //2nd approach 
+//         // TC - O(N) + O(N)
+//         // SC - O(N)
+        
+//         Stack<Integer> s = new Stack<>();
+        
+//         int maxArea = 0;
+        
+//         for(int index = 0; index <= n; index++){
+            
+//             while(!s.isEmpty() && (index == n || heights[s.peek()] >= heights[index])){
+                
+//                 int height = heights[s.peek()];
+//                 s.pop();
+//                 int width;
+                
+//                 if(s.isEmpty()) width = index;
+//                 else width = index - s.peek() - 1;
+                
+//                 maxArea = Math.max(maxArea, width*height);
+//             }
+            
+//             s.push(index);
+//         }
+//         return maxArea;
