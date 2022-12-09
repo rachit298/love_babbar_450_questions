@@ -1,0 +1,40 @@
+import java.util.*;
+
+class Main{
+    public static void main(String[] args) {
+        
+        // Using KMP(Knuth-Morris-Pratt) algorithm 
+        // TC - O(N)
+        // SC - O(N+N)
+
+        // we can also use substring approach but it will take O(n^2) TC.
+
+        Scanner sc = new Scanner(System.in);
+        String s1 = sc.next(), s2 = sc.next();
+
+        if(s1.length() != s2.length()){
+            System.out.println("Strings are not rotations of each other");
+            return;
+        }
+
+        String merged = s1 + s1;
+
+        int low = 0, high = s2.length(), limit = merged.length();
+
+        while(high <= limit){
+
+            String subString = merged.substring(low, high);
+
+            System.out.println(subString);
+
+            if(subString.equals(s2)){
+                System.out.println("Strings are rotations of each other");
+                return;
+            }
+
+            high++;
+            low++;
+        }
+        System.out.println("Strings are not rotations of each other");
+    }
+}
