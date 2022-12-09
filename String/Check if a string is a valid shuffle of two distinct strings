@@ -1,0 +1,73 @@
+import java.util.*;
+
+class ShuffleString {
+    public static void main(String[] args) {
+
+        String first = "XY";
+        String second = "12";
+        String[] results = { "1XY2", "Y1X2", "Y21XX" };
+
+        for (String str : results) {
+
+            if (checkLength(first, second, str) == true && shuffleString(first, second, str) == true) {
+
+                System.out.println(str + " is a valid shuffle of " + first + " and " + second);
+            } else {
+
+                System.out.println(str + " is not a valid shuffle of " + first + " and " + second);
+            }
+        }
+    }
+
+    public static boolean shuffleString(String first, String second, String third) {
+
+        String s1 = sortString(first);
+        String s2 = sortString(second);
+        String s3 = sortString(third);
+
+        int i = 0, j = 0, k = 0;
+
+        while (k < third.length()) {
+
+            if (i < s1.length() && s1.charAt(i) == s3.charAt(k)) {
+
+                i++;
+            } else if (j < s2.length() && s2.charAt(j) == s3.charAt(k)) {
+
+                j++;
+            } else {
+
+                return false;
+            }
+            k++;
+        }
+
+        if (i < s1.length() || j < s2.length()) {
+
+            return false;
+        }
+        return true;
+    }
+
+    public static String sortString(String str) {
+
+        char[] charArray = str.toCharArray();
+
+        Arrays.sort(charArray);
+
+        String s = String.valueOf(charArray);
+
+        return s;
+    }
+
+    public static boolean checkLength(String first, String second, String third) {
+
+        if (first.length() + second.length() == third.length()) {
+
+            return true;
+        } else {
+
+            return false;
+        }
+    }
+}
