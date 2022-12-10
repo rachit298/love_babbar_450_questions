@@ -1,0 +1,72 @@
+//{ Driver Code Starts
+//Initial Template for Java
+
+import java.io.*;
+import java.util.*;
+class GFG
+{
+    public static void main(String args[])throws IOException
+    {
+        BufferedReader read = new BufferedReader(new InputStreamReader(System.in));
+        int t = Integer.parseInt(read.readLine());
+        while(t-- > 0)
+        {
+            String S = read.readLine();
+            
+            Solution ob = new Solution();
+            System.out.println(ob.longestPalin(S));
+        }
+    }
+}
+
+// } Driver Code Ends
+
+
+//User function Template for Java
+
+class Solution{
+    static String longestPalin(String S){
+        
+        int low, high;
+        
+        int start = 0, end = 0;
+        
+        for(int index = 0; index < S.length(); index++){
+            
+            //even length part
+            
+            low = index;
+            high = index+1;
+            
+            while(low >= 0 && high < S.length() && S.charAt(low) == S.charAt(high)){
+                
+                if(high - low > end - start){
+                    
+                    start = low;
+                    end = high;
+                }
+                
+                low--;
+                high++;
+            }
+            
+            //odd length part
+            
+            low = index;
+            high = index+2;
+            
+            while(low >= 0 && high < S.length() && S.charAt(low) == S.charAt(high)){
+                
+                if(high - low > end - start){
+                    
+                    start = low;
+                    end = high;
+                }
+                
+                low--;
+                high++;
+            }
+        }
+        return S.substring(start, end+1);
+    }
+}
