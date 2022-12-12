@@ -1,0 +1,64 @@
+import java.util.*;
+
+public class allSubsequences {
+    public static void main(String[] args) {
+
+        // 1st approach using Recursion/ take or not take technique
+        // TC - O(2^n * n)
+        // SC - O(n)
+
+        Scanner sc = new Scanner(System.in);
+        String str = sc.next();
+        int n = str.length();
+
+        findAllSequence(0, "", str, n);
+    }
+
+    public static void findAllSequence(int index, String ss, String str, int n) {
+
+        if (index == n) {
+            for (int i = 0; i < ss.length(); i++) {
+                System.out.print(ss.charAt(i));
+            }
+            System.out.println();
+            return;
+        }
+        //add character 
+        ss = ss + str.charAt(index);
+        //add next character
+        findAllSequence(index + 1, ss, str, n);
+        //remove last character from this string to get other sequences
+        ss = ss.substring(0, ss.length() - 1);
+        //keep finding other sequences
+        findAllSequence(index + 1, ss, str, n);
+    }
+}
+/*
+ * 2nd approach using kind of bit manipulation
+ * TC - O(2^n * n)
+ * SC - O(1)
+ * 
+ * int totalSubsequence = (int)Math.pow(2, n);
+ * 
+ * for(int i = 0; i < totalSubsequence; i++){
+ * 
+ * int temp = i;
+ * String s = "";
+ * 
+ * for(int index = n-1; index >= 0; index--){
+ * 
+ * int rem = temp%2;
+ * temp /= 2;
+ * 
+ * if(rem == 0){
+ * s = "" + s;
+ * }
+ * else{
+ * s = str.charAt(index) + "" + s;
+ * }
+ * }
+ * if(s.length() != 0){
+ * System.out.println(s);
+ * }
+ * }
+ */
