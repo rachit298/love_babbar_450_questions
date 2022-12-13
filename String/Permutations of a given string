@@ -1,0 +1,68 @@
+//{ Driver Code Starts
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+{
+	public static void main(String[] args) throws IOException
+	{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int t = Integer.parseInt(br.readLine().trim());
+        while(t-->0)
+        {
+            String S = br.readLine().trim();
+            Solution obj = new Solution();
+            List<String> ans = obj.find_permutation(S);
+            for( int i = 0; i < ans.size(); i++)
+            {
+                System.out.print(ans.get(i)+" ");
+            }
+            System.out.println();
+                        
+        }
+	}
+}
+
+
+// } Driver Code Ends
+
+
+class Solution {
+    public List<String> find_permutation(String S) {
+        
+        
+        //Recursion approach
+        
+        //using TreeSet helps in getting the required sorting order
+        //HashSet won't provide this feature.
+        
+        Set<String> ans = new TreeSet<>();
+        addpermutations(S, "", ans);
+        return new ArrayList<>(ans);
+    }
+    
+    public void addpermutations(String S, String res, Set<String> ans){
+        
+        if(S.length() == 0){
+            
+            ans.add(res);
+        }
+        
+        for(int index = 0; index < S.length(); index++){
+            
+            char ch = S.charAt(index);
+            
+            //leaving the 'index' character and taking its left and right
+            //substring to make a new string.
+            
+            String leftSubstring = S.substring(0, index);
+            String rightSubstring = S.substring(index+1);
+            String add = leftSubstring + rightSubstring;
+            
+            //pass new string and add 'index' character into result
+            //till new string's length becomes 0.
+            
+            addpermutations(add, res + ch, ans);
+        }
+    }
+}
