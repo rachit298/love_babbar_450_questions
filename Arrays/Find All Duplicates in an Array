@@ -1,0 +1,33 @@
+class Solution {
+    public List<Integer> findDuplicates(int[] nums) {
+        
+        List<Integer> li = new ArrayList<>();
+
+        //visit each element and since elements are in range 1 to n
+        //read next comment in continuity
+
+        for(int index = 0; index < nums.length; index++){
+
+            //we can use these elements as an index value 
+            //and if same number occurs again then it will point to an
+            //element which has already been visited.
+
+            //taking absolute value will help in avoiding taking 
+            //values that are negative in array
+            
+            int absoluteValue = Math.abs(nums[index]);
+
+            if(nums[absoluteValue - 1] < 0){
+
+                li.add(absoluteValue);
+            }
+
+            //to keep track of which indexes has been visited we make 
+            //those elements negative.
+
+            else nums[absoluteValue - 1] = -1 * nums[absoluteValue - 1];
+        }
+
+        return li;
+    }
+}
