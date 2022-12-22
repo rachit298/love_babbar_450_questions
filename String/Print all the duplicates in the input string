@@ -9,7 +9,7 @@ public class Main
 		
 		Map<Character, Integer> charMap = new HashMap<>();
 		
-		for(int index = 0; index < str.length()-1; index++){
+		for(int index = 0; index < str.length(); index++){
 		    
 		    charMap.put(str.charAt(index), charMap.getOrDefault(str.charAt(index), 0) +1);
 		}
