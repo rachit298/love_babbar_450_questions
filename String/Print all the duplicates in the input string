@@ -11,7 +11,7 @@ public class Main
 		
 		for(int index = 0; index < str.length(); index++){
 		    
-		    charMap.put(str.charAt(index), charMap.getOrDefault(str.charAt(index), 0) +1);
+		    charMap.put(str.charAt(index), charMap.getOrDefault(str.charAt(index), 1) +1);
 		}
 		
 		//Iterator is used to iterate over each key-value pair
