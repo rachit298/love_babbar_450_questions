@@ -1,0 +1,126 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+	public static void main(String[] args) {
+
+		// as given in question both string are given
+		// in character array.
+		// so i have created a string and then converted it
+		// in character array as it is way easier to convert
+		// than to write each character array.
+
+		// Rabin-Karp algorithm
+		// TC - O(N-M+1) for best and average case, 
+		// O(N * M) for worst case due to occurence of spurious hits
+		// SC - O(1)
+
+		String s1 = "AAABABAABAC";
+		String s2 = "AABA";
+
+		char[] pat = s1.toCharArray();
+		char[] test = s2.toCharArray();
+
+		// took max to find the maximum possible range of
+		// characters. (in our case it is 'C' = 67)
+		int max = 0;
+
+		for (int index : pat) {
+			if (max < index) {
+				max = index;
+			}
+		}
+
+		// convert it into smaller value to avoid integer
+		// overflow.
+		int totalAlphabets = max - 64;
+
+		// this length will be used as length and power.
+		int testLength = test.length - 1;
+
+		// hash function to find custom hash value of test
+		int hashValueOfTest = hashVal(test, testLength, totalAlphabets, 0);
+
+		// did the same thing for pat array but in it we
+		// took only hash value from '0' to length of test
+		// array.
+		int hashValueOfPat = hashVal(pat, testLength, totalAlphabets, 0);
+
+		// loop will check for equal hash value and print index and
+		// maintain hash value by adding and removing elements.
+		// loop assures that our window of 'test.length' will
+		// not exceed pat.length
+		for (int index = 0; index + testLength <= pat.length - 1; index++) {
+
+			// compare hash values
+			if (hashValueOfPat == hashValueOfTest) {
+
+				// compares each character in array and print
+				// index if satisfies conditions.
+				checkChar(pat, test, index);
+			}
+
+			// condition check before taking new element in
+			// window that it won't exceed pat.length
+			if (index + testLength + 1 < pat.length) {
+
+				// add new element and remove previous element
+				hashValueOfPat = nextHashValue(pat, test, testLength, totalAlphabets, hashValueOfPat, index);
+			}
+		}
+	}
+
+	static int hashVal(char[] arr, int power, int totalAlphabets, int start) {
+
+		// take length as power cause it is equal to
+		// test.length-1 or you can pass array length
+		// using another variable
+		int length = power;
+
+		// variable to store total hash value
+		int totalValue = 0;
+
+		// loop through each element in given window
+		for (int j = start; j <= start + length; j++) {
+
+			int val = arr[j] - 64;
+
+			totalValue += val * (int) (Math.pow(totalAlphabets, power--));
+		}
+		return totalValue;
+	}
+
+	public static void checkChar(char[] pat, char[] test, int start) {
+
+		boolean flag = true;
+
+		// this loop compares each character
+		for (int j = 0; j < test.length; j++) {
+			if (test[j] != pat[j + start]) {
+				flag = false;
+				break;
+			}
+		}
+
+		// if flag still has true than it means every character
+		// is equal. Hence, print index.
+		if (flag == true) {
+			System.out.println("Pattern found at index " + start);
+		}
+	}
+
+	static int nextHashValue(char[] pat, char[] test, int power, int totalAlphabets, int hashValueOfPat, int initial) {
+
+		// calculating required values for further calculation
+		int length = test.length - 1;
+		int prevValue = pat[initial] - 64;
+		int nextValue = pat[initial + length + 1] - 64;
+
+		int val = prevValue * (int) (Math.pow(totalAlphabets, power));
+
+		// add next value and removes previous value
+		hashValueOfPat = ((hashValueOfPat - val) * totalAlphabets) + nextValue;
+
+		return hashValueOfPat;
+	}
+}
